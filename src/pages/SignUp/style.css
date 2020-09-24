@@ -36,7 +36,7 @@
 }
 
 .content > a{
-  color: #ff9000;
+  color: #F4EDE8;
   display: block;
   margin: 24px auto;
   margin-bottom: 0;
@@ -51,11 +51,11 @@
 }
 
 .content > a:hover{
-  color: #ff9100b0;
+  color: #f4ede8ad;
 }
 
 .background{
   flex: 1;
-  background: url(../../assets/sign-in-background.png) no-repeat center;
+  background: url(../../assets/sign-up-background.png) no-repeat center;
   background-size: cover;
 }
