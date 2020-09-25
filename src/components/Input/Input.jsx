@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Input.css';
 
-const Input = (props) => {
-  const Icon = props.icon; // eslint-disable-line
+const Input = ({ icon, ...props }) => {
+  const inputRef = useRef(null);
+
+  useEffect(() => {}, []);
+
+  const Icon = icon;
   return (
     <div className="input-container">
       {Icon && <Icon size={20} />}
-      <input {...props} />
+      <Input ref={inputRef} {...props} />
     </div>
   );
 };
