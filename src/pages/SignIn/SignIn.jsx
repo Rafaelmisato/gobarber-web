@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './SignIn.css';
+import * as Yup from 'yup';
 
 import { FiLogIn, FiLock } from 'react-icons/fi';
 
@@ -24,23 +25,22 @@ const formFields = [
 ];
 
 const SignIn = () => {
-  const SignUp = () => {
-    const handleSubmit = useCallback(async (data) => {
-      try {
-        const schema = Yup.object().shape({
-          name: Yup.string().required('Nome Obrigatório'),
-          email: Yup.string()
-            .required('E-mail obrigatório')
-            .email('Dígite um e-mail válido'),
-          password: Yup.string().min(6, 'No mínimo 6 dígitos'),
-        });
-        await schema.validate(data, {
-          abortEarly: false,
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    });
+  const handleSubmit = useCallback(async (data) => {
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string().required('Nome Obrigatório'),
+        email: Yup.string()
+          .required('E-mail obrigatório')
+          .email('Dígite um e-mail válido'),
+        password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+      });
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
   return (
     <div className="container">
