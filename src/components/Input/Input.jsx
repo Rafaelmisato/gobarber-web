@@ -1,9 +1,19 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { useField } from '@unform/core';
 import './Input.css';
 
-const Input = ({ icon, ...props }) => {
+const Input = ({ icon, name, ...props }) => {
   const Icon = icon;
   const inputRef = useRef(null);
+  const { fieldName, registerField, defaultValue, error } = useField(name);
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      ref: inputRef.current,
+      path: 'value',
+    });
+  }, [fieldName, registerField]);
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);

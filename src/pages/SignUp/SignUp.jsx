@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import './SignUp.css';
 import { FiMail, FiUser, FiLock, FiArrowDownLeft } from 'react-icons/fi';
+import { Form } from '@unform/web';
+import * as Yup from 'yup';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -9,7 +11,7 @@ import Button from '../../components/Button/Button';
 
 const formFields = [
   {
-    id: 'nome',
+    id: 'name',
     type: 'text',
     placeholder: 'Nome',
     icon: FiUser,
@@ -29,17 +31,22 @@ const formFields = [
 ];
 
 const SignUp = () => {
-  const [data, setData] = useState({ nome: '', email: '', password: '' });
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log({ ...data });
-  }
-
-  function handleChange({ target }) {
-    const { id, value } = target;
-    setData({ ...data, [id]: value });
-  }
+  const handleSubmit = useCallback(async (data) => {
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string().required('Nome Obrigatório'),
+        email: Yup.string()
+          .required('E-mail obrigatório')
+          .email('Dígite um e-mail válido'),
+        password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+      });
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
   return (
     <div className="container">
@@ -47,23 +54,22 @@ const SignUp = () => {
       <div className="content">
         <img src={logoImg} alt="Gobarber" />
 
-        <form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <h1>Faça seu cadastro</h1>
 
           {formFields.map(({ id, type, placeholder, icon }) => (
             <Input
+              name={id}
               key={id}
               type={type}
               icon={icon}
               placeholder={placeholder}
               id={id}
-              value={data[id]}
-              onChange={handleChange}
             />
           ))}
 
           <Button type="submit">Cadastrar</Button>
-        </form>
+        </Form>
 
         <a href="teste">
           <FiArrowDownLeft />
