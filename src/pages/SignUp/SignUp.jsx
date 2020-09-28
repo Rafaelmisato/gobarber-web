@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import './SignUp.css';
 import { FiMail, FiUser, FiLock, FiArrowDownLeft } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -31,8 +32,12 @@ const formFields = [
 ];
 
 const SignUp = () => {
+  const formRef = useRef(null);
+
   const handleSubmit = useCallback(async (data) => {
     try {
+      formRef.current.setErrors({});
+
       const schema = Yup.object().shape({
         name: Yup.string().required('Nome Obrigatório'),
         email: Yup.string()
@@ -44,9 +49,10 @@ const SignUp = () => {
         abortEarly: false,
       });
     } catch (err) {
-      console.log(err);
+      const errors = getValidationErrors(err);
+      formRef.current.setErrors(errors);
     }
-  });
+  }, []);
 
   return (
     <div className="container">
@@ -54,7 +60,7 @@ const SignUp = () => {
       <div className="content">
         <img src={logoImg} alt="Gobarber" />
 
-        <Form onSubmit={handleSubmit}>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>Faça seu cadastro</h1>
 
           {formFields.map(({ id, type, placeholder, icon }) => (
