@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './style.css';
+import './SignUp.css';
 import { FiMail, FiUser, FiLock, FiArrowDownLeft } from 'react-icons/fi';
 
 import logoImg from '../../assets/logo.svg';
@@ -57,7 +57,7 @@ const SignUp = () => {
               icon={icon}
               placeholder={placeholder}
               id={id}
-              value={data.id}
+              value={data[id]}
               onChange={handleChange}
             />
           ))}

@@ -1,3 +1,19 @@
+.selected{
+  color: #ff9000;
+  border: 2px solid #ff9000;
+  display: flex;
+  align-items: center;
+  background: #232129;
+  border-radius: 10px;
+  padding: 16px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.filled{
+  color: #ff9000 !important;
+}
+
 .input-container{
   display: flex;
   align-items: center;
@@ -10,7 +26,6 @@
 }
 
 .input-container > svg{
-  margin-right: 10px;
   color: #666360;
 }
 
@@ -18,9 +33,10 @@
   color: #666360;
 }
 
-.input-container > input{
+.input-container > input, .selected > input{
   flex: 1;
   background: transparent;
   border: none;
   color: #f4ede8;
+  margin-left: 8px;
 }

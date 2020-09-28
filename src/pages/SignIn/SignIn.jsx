@@ -1,6 +1,7 @@
-import React from 'react';
-import './style.css';
-import { FiLogIn, FiLock, FiMail, FiUser } from 'react-icons/fi';
+import React, { useState } from 'react';
+import './SignIn.css';
+
+import { FiLogIn, FiLock } from 'react-icons/fi';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -9,10 +10,10 @@ import Button from '../../components/Button/Button';
 
 const formFields = [
   {
-    id: 'nome',
+    id: 'login',
     type: 'text',
-    placeholder: 'nome',
-    icon: FiUser,
+    placeholder: 'Login',
+    icon: FiLogIn,
   },
   {
     id: 'password',
@@ -22,27 +23,25 @@ const formFields = [
   },
 ];
 
-const SignUp = () => {
-  const [data, setData] = useState({ nome: '', password: '' });
+const SignIn = () => {
+  const [data, setData] = useState({ login: '', password: '' });
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log({ ...data });
+  }
 
   function handleChange({ target }) {
     const { id, value } = target;
     setData({ ...data, [id]: value });
-    console.log(data);
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-  }
-
-const SignIn = () => {
   return (
     <div className="container">
       <div className="content">
         <img src={logoImg} alt="Gobarber" />
-
-        <form>
-          <h1>Faça seu logon</h1>
+        <form onSubmit={handleSubmit}>
+          <h1>Faça seu cadastro</h1>
 
           {formFields.map(({ id, type, placeholder, icon }) => (
             <Input
@@ -51,20 +50,15 @@ const SignIn = () => {
               icon={icon}
               placeholder={placeholder}
               id={id}
-              value={data[id]}
+              value={data.id}
               onChange={handleChange}
             />
           ))}
 
-          <Button type="button" onSubmit={handleSubmit}>Enviar</Button>
-
-          <a href="forgot">Esqueci minha senha</a>
+          <Button type="submit">Cadastrar</Button>
         </form>
 
-        <a href="teste">
-          <FiLogIn />
-          Criar conta
-        </a>
+        <a href="teste">Voltar para logon</a>
       </div>
       <div className="background" />
     </div>
