@@ -10,6 +10,10 @@
   margin-bottom: 8px;
 }
 
+.error{
+  border: 2px solid #c53030 !important ;
+}
+
 .filled{
   color: #ff9000 !important;
 }
