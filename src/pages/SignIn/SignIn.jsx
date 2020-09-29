@@ -12,9 +12,9 @@ import Button from '../../components/Button/Button';
 
 const formFields = [
   {
-    id: 'login',
+    id: 'email',
     type: 'text',
-    placeholder: 'Login',
+    placeholder: 'E-mail',
     icon: FiLogIn,
   },
   {
@@ -34,7 +34,7 @@ const SignIn = () => {
 
       const schema = Yup.object().shape({
         login: Yup.string()
-          .required('Usuário Obrigatório')
+          .required('E-mail Obrigatório')
           .email('Digite um e-mail válido'),
         password: Yup.string().required('Senha Inválida'),
       });
@@ -52,7 +52,7 @@ const SignIn = () => {
       <div className="content">
         <img src={logoImg} alt="Gobarber" />
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Faça seu cadastro</h1>
+          <h1>Faça seu login</h1>
 
           {formFields.map(({ id, type, placeholder, icon }) => (
             <Input
@@ -65,10 +65,14 @@ const SignIn = () => {
             />
           ))}
 
-          <Button type="submit">Cadastrar</Button>
+          <Button type="submit">Entrar</Button>
+          <a href="teste">Esqueci minha senha</a>
         </Form>
 
-        <a href="teste">Voltar para logon</a>
+        <a href="teste">
+          <FiLogIn />
+          Criar conta
+        </a>
       </div>
       <div className="background" />
     </div>
