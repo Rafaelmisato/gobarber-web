@@ -1,11 +1,11 @@
-import React, { useCallback, useRef, useContext } from 'react';
+import React, { useCallback, useRef } from 'react';
 import './SignIn.css';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FiLogIn, FiLock } from 'react-icons/fi';
 import getValidationErrors from '../../utils/getValidationErrors';
 
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/AuthContext';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -30,7 +30,7 @@ const formFields = [
 const SignIn = () => {
   const formRef = useRef(null);
 
-  const { user, signIn } = useContext(AuthContext);
+  const { signIn } = useAuth();
 
   const handleSubmit = useCallback(
     async (data) => {
@@ -52,8 +52,12 @@ const SignIn = () => {
           password: data.password,
         });
       } catch (err) {
-        const errors = getValidationErrors(err);
-        formRef.current.setErrors(errors);
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+          formRef.current.setErrors(errors);
+        }
+
+        // disparar um toast
       }
     },
     [signIn]

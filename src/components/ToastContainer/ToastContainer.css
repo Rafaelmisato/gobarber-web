@@ -1,0 +1,118 @@
+.toast-container{
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 30px;
+  overflow: hidden;
+}
+
+/*DEFAULT TOAST*/
+
+.toast{
+  width: 360px;
+  position: relative;
+  padding: 16px 30px 16px 16px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  background: #ebf8ff;
+  color: #3172b7;
+  margin-bottom: 8px;
+}
+
+.toast > svg{
+  margin: 4px 12px 0 0;
+}
+
+.toast > div{
+  flex: 1;
+}
+
+.toast div p{
+  margin-top: 4px;
+  font-size: 14px;
+  opacity: 0.8;
+  line-height: 20px;
+}
+
+.toast button{
+  position: absolute;
+  right: 16px;
+  top: 19px;
+  opacity: 0.6;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+/*SUCESS TOAST*/
+
+.sucess{
+  align-items: center;
+  width: 360px;
+  position: relative;
+  padding: 16px 30px 16px 16px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  background: #e6fffa;
+  color: #2e546a;
+  margin-bottom: 8px;
+}
+
+.sucess > svg{
+  margin: 0px 12px 0 0;
+}
+
+.sucess > div{
+  flex: 1;
+}
+
+.sucess button{
+  position: absolute;
+  right: 16px;
+  top: 19px;
+  opacity: 0.6;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+/*ERROR TOAST*/
+
+.toast-error{
+  width: 360px;
+  position: relative;
+  padding: 16px 30px 16px 16px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  background: #fddede;
+  color: #c53030;
+  margin-bottom: 8px;
+}
+
+.toast-error > svg{
+  margin: 4px 12px 0 0;
+}
+
+.toast-error > div{
+  flex: 1;
+}
+
+.toast-error div p{
+  margin-top: 4px;
+  font-size: 14px;
+  opacity: 0.8;
+  line-height: 20px;
+}
+
+.toast-error button{
+  position: absolute;
+  right: 16px;
+  top: 19px;
+  opacity: 0.6;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
