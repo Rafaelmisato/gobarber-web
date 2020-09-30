@@ -4,15 +4,13 @@ import './App.css';
 import SignIn from './pages/SignIn/SignIn';
 // import SignUp from './pages/SignUp/SignUp';
 
-import ToastContainer from './components/ToastContainer/ToastContainer';
-import { AuthProvider } from './hooks/AuthContext';
+import AppProvider from './hooks/index';
 
 const App = () => (
   <>
-    <AuthProvider>
+    <AppProvider>
       <SignIn />
-    </AuthProvider>
-    <ToastContainer />
+    </AppProvider>
   </>
 );
 
