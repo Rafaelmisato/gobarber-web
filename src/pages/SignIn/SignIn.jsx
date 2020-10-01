@@ -3,6 +3,8 @@ import './SignIn.css';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FiLogIn, FiLock } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+import { useSpring, animated } from 'react-spring';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useAuth } from '../../hooks/auth';
@@ -30,6 +32,8 @@ const formFields = [
 
 const SignIn = () => {
   const formRef = useRef(null);
+
+  const styles = useSpring({ opacity: 1, from: { opacity: 0 } });
 
   const { signIn } = useAuth();
   const { addToast } = useToast();
@@ -70,9 +74,10 @@ const SignIn = () => {
   );
 
   return (
-    <div className="container">
-      <div className="content">
+    <div className="singin-container">
+      <animated.div className="singin-content" style={styles}>
         <img src={logoImg} alt="Gobarber" />
+
         <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>Faça seu login</h1>
 
@@ -91,12 +96,12 @@ const SignIn = () => {
           <a href="teste">Esqueci minha senha</a>
         </Form>
 
-        <a href="teste">
+        <Link to="/signup">
           <FiLogIn />
           Criar conta
-        </a>
-      </div>
-      <div className="background" />
+        </Link>
+      </animated.div>
+      <div className="singin-background" />
     </div>
   );
 };

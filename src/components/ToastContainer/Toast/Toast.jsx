@@ -9,6 +9,7 @@ import {
   FiInfo,
   FiXCircle,
 } from 'react-icons/fi';
+
 import { useToast } from '../../../hooks/toast';
 
 const icons = {

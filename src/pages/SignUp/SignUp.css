@@ -1,12 +1,10 @@
-
-
-.container{
+.signup-container{
   height: 100vh;
   display: flex;
   align-items: stretch;
 }
 
-.content{
+.signup-content{
   display: flex;
   flex-direction: column;
   place-content: center;
@@ -15,17 +13,17 @@
   text-align: center;
 }
 
-.content form{
+.signup-content form{
   margin: 80px auto;
   width: 340px;
   text-align: center;
 }
 
-.content h1{ 
+.signup-content h1{ 
   margin-bottom: 24px;
 }
 
-.content > form > a {
+.signup-content > form > a {
   color: #F4EDE8;
   display: block;
   margin-top: 24px;
@@ -33,11 +31,11 @@
   transition: color 0.2s;
 }
 
-.content > form > a:hover {
+.signup-content > form > a:hover {
   color: #f4ede8ad;
 }
 
-.content > a{
+.signup-content > a{
   color: #F4EDE8;
   display: block;
   margin: 24px auto;
@@ -48,15 +46,15 @@
   align-items: center;
 }
 
-.content > a > svg{
+.signup-content > a > svg{
   margin-right: 16px;
 }
 
-.content > a:hover{
+.signup-content > a:hover{
   color: #f4ede8ad;
 }
 
-.background{
+.signup-background{
   flex: 1;
   background: url(../../assets/sign-up-background.png) no-repeat center;
   background-size: cover;

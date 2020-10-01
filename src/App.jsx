@@ -1,17 +1,16 @@
 import React from 'react';
 import './App.css';
-
-import SignIn from './pages/SignIn/SignIn';
-// import SignUp from './pages/SignUp/SignUp';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './routes/routes';
 
 import AppProvider from './hooks/index';
 
 const App = () => (
-  <>
+  <BrowserRouter>
     <AppProvider>
-      <SignIn />
+      <Routes />
     </AppProvider>
-  </>
+  </BrowserRouter>
 );
 
 export default App;
