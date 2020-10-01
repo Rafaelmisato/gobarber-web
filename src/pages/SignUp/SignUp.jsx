@@ -4,7 +4,6 @@ import { FiMail, FiUser, FiLock, FiArrowDownLeft } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import { useSpring, animated } from 'react-spring';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import logoImg from '../../assets/logo.svg';
@@ -36,8 +35,6 @@ const formFields = [
 const SignUp = () => {
   const formRef = useRef(null);
 
-  const styles = useSpring({ opacity: 1, from: { opacity: 0 } });
-
   const handleSubmit = useCallback(async (data) => {
     try {
       formRef.current.setErrors({});
@@ -61,7 +58,7 @@ const SignUp = () => {
   return (
     <div className="signup-container">
       <div className="signup-background" />
-      <animated.div className="signup-content" style={styles}>
+      <div className="signup-content">
         <img src={logoImg} alt="Gobarber" />
 
         <Form ref={formRef} onSubmit={handleSubmit}>
@@ -85,7 +82,7 @@ const SignUp = () => {
           <FiArrowDownLeft />
           Voltar para logon
         </Link>
-      </animated.div>
+      </div>
     </div>
   );
 };

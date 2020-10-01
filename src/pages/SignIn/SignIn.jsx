@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FiLogIn, FiLock } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { useSpring, animated } from 'react-spring';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useAuth } from '../../hooks/auth';
@@ -33,8 +32,6 @@ const formFields = [
 const SignIn = () => {
   const formRef = useRef(null);
 
-  const styles = useSpring({ opacity: 1, from: { opacity: 0 } });
-
   const { signIn } = useAuth();
   const { addToast } = useToast();
 
@@ -61,6 +58,8 @@ const SignIn = () => {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           formRef.current.setErrors(errors);
+
+          return;
         }
 
         addToast({
@@ -75,7 +74,7 @@ const SignIn = () => {
 
   return (
     <div className="singin-container">
-      <animated.div className="singin-content" style={styles}>
+      <div className="singin-content">
         <img src={logoImg} alt="Gobarber" />
 
         <Form ref={formRef} onSubmit={handleSubmit}>
@@ -100,7 +99,7 @@ const SignIn = () => {
           <FiLogIn />
           Criar conta
         </Link>
-      </animated.div>
+      </div>
       <div className="singin-background" />
     </div>
   );
