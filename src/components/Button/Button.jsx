@@ -1,8 +1,8 @@
 import React from 'react';
 import './Button.css';
 
-const Button = ({ children, ...rest }) => (
-  <button className="button" type="button" {...rest}>
+const Button = ({ children }) => (
+  <button className="button" type="submit">
     {children}
   </button>
 );

@@ -3,7 +3,7 @@ import './SignIn.css';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FiLogIn, FiLock } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useAuth } from '../../hooks/auth';
@@ -16,7 +16,7 @@ import Button from '../../components/Button/Button';
 
 const formFields = [
   {
-    id: 'name',
+    id: 'email',
     type: 'email',
     placeholder: 'E-mail',
     icon: FiLogIn,
@@ -34,6 +34,7 @@ const SignIn = () => {
 
   const { signIn } = useAuth();
   const { addToast } = useToast();
+  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data) => {
@@ -41,11 +42,12 @@ const SignIn = () => {
         formRef.current.setErrors({});
 
         const schema = Yup.object().shape({
-          name: Yup.string()
+          email: Yup.string()
             .required('E-mail Obrigatório')
             .email('Digite um e-mail válido'),
           password: Yup.string().required('Senha Inválida'),
         });
+
         await schema.validate(data, {
           abortEarly: false,
         });
@@ -54,12 +56,18 @@ const SignIn = () => {
           email: data.email,
           password: data.password,
         });
+
+        addToast({
+          type: 'success',
+          title: 'Login efetuado',
+          description: 'Seu login foi feito com sucesso!',
+        });
+
+        history.push('/dashboard');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           formRef.current.setErrors(errors);
-
-          return;
         }
 
         addToast({
@@ -69,7 +77,7 @@ const SignIn = () => {
         });
       }
     },
-    [signIn, addToast]
+    [signIn, addToast, history]
   );
 
   return (
@@ -87,11 +95,10 @@ const SignIn = () => {
               type={type}
               icon={icon}
               placeholder={placeholder}
-              id={id}
             />
           ))}
 
-          <Button type="submit">Entrar</Button>
+          <Button>Entrar</Button>
           <a href="teste">Esqueci minha senha</a>
         </Form>
 

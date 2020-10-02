@@ -3,8 +3,10 @@ import './SignUp.css';
 import { FiMail, FiUser, FiLock, FiArrowDownLeft } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
+import api from '../../services/api';
+import { useToast } from '../../hooks/toast';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -34,26 +36,54 @@ const formFields = [
 
 const SignUp = () => {
   const formRef = useRef(null);
+  const { addToast } = useToast();
+  const history = useHistory();
 
-  const handleSubmit = useCallback(async (data) => {
-    try {
-      formRef.current.setErrors({});
+  const handleSubmit = useCallback(
+    async (data) => {
+      try {
+        formRef.current.setErrors({});
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Nome Obrigatório'),
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Dígite um e-mail válido'),
-        password: Yup.string().min(6, 'No mínimo 6 dígitos'),
-      });
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (err) {
-      const errors = getValidationErrors(err);
-      formRef.current.setErrors(errors);
-    }
-  }, []);
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
+          email: Yup.string()
+            .required('Email obrigatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().min(6, 'No minimo 6 digitos'),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        await api.post('/users', data);
+
+        history.push('/');
+
+        addToast({
+          type: 'sucess',
+          title: 'Cadastro realizado!',
+          description: 'Você já pode fazer seu login no GoBarber!',
+        });
+      } catch (err) {
+        console.log(err);
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current.setErrors(errors);
+
+          return;
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro no cadastro',
+          description: 'Ocorreu um erro ao fazer cadastro, tente novamente',
+        });
+      }
+    },
+    [addToast, history]
+  );
 
   return (
     <div className="signup-container">
@@ -75,12 +105,12 @@ const SignUp = () => {
             />
           ))}
 
-          <Button type="submit">Cadastrar</Button>
+          <Button>Cadastrar</Button>
         </Form>
 
         <Link to="/">
           <FiArrowDownLeft />
-          Voltar para logon
+          Voltar para login
         </Link>
       </div>
     </div>

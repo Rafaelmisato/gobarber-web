@@ -27,8 +27,7 @@ const Input = ({ icon, name, ...props }) => {
 
   const handleInputFocus = useCallback(() => {
     setIsFocused(true);
-  }, []); // colocar como parametro o input, pra ele renderizar de novo e a borda renderiza e fica laranja no erro ?
-  // corrigir o erro da borda, a laranja precisa ser prioridade, igual da aula
+  }, []);
 
   return (
     <div

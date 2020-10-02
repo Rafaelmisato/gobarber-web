@@ -15,7 +15,7 @@ const Routes = (location) => (
     <Route path="/" exact component={SignIn} />
     <Route path="/signup" component={SignUp} />
     <Route path="/dashboard">
-      {isPrivate === !!user ? (
+      {isPrivate === user ? (
         <Redirect to={{ pathname: '/', state: { from: location } }} />
       ) : (
         <Dashboard />

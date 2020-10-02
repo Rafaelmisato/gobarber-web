@@ -3,7 +3,7 @@ import api from '../services/api';
 
 const AuthContext = createContext({});
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [data, setData] = useState(() => {
     const token = localStorage.getItem('@GoBarber:token');
     const user = localStorage.getItem('@GoBarber:user');
@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-function useAuth() {
+export function useAuth() {
   const context = useContext(AuthContext);
 
   if (!context) {
@@ -52,5 +52,3 @@ function useAuth() {
 
   return context;
 }
-
-export { AuthProvider, useAuth };
