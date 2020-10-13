@@ -1,9 +1,9 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import './ForgotPassword.css';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FiMail, FiLogIn } from 'react-icons/fi';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useToast } from '../../hooks/toast';
@@ -12,6 +12,7 @@ import logoImg from '../../assets/logo.svg';
 
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
+import api from '../../services/api';
 
 const formFields = [
   {
@@ -23,14 +24,16 @@ const formFields = [
 ];
 
 const ForgotPassword = () => {
+  const [loading, setLoading] = useState(false);
   const formRef = useRef(null);
 
   const { addToast } = useToast();
-  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data) => {
       try {
+        setLoading(true);
+
         formRef.current.setErrors({});
 
         const schema = Yup.object().shape({
@@ -43,7 +46,9 @@ const ForgotPassword = () => {
           abortEarly: false,
         });
 
-        // recuperacao de senha
+        await api.post('/password/forgot', {
+          email: data.email,
+        });
 
         addToast({
           type: 'success',
@@ -64,9 +69,11 @@ const ForgotPassword = () => {
           description:
             'Ocorreu um erro ao fazer a recuperação de senha, tente novamente',
         });
+      } finally {
+        setLoading(false);
       }
     },
-    [addToast, history]
+    [addToast]
   );
 
   return (
@@ -87,7 +94,7 @@ const ForgotPassword = () => {
             />
           ))}
 
-          <Button>Recuperar</Button>
+          <Button loading={loading}>Recuperar</Button>
         </Form>
 
         <Link to="/signin">
