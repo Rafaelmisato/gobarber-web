@@ -99,7 +99,7 @@ const SignIn = () => {
           ))}
 
           <Button>Entrar</Button>
-          <a href="teste">Esqueci minha senha</a>
+          <Link to="/forgot">Esqueci minha senha</Link>
         </Form>
 
         <Link to="/signup">

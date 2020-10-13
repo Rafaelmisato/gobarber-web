@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/auth';
 
 import SignIn from '../pages/SignIn/SignIn';
 import SignUp from '../pages/SignUp/SignUp';
+import ForgotPassword from '../pages/ForgotPassword/ForgotPassword';
 
 import Dashboard from '../pages/Dashboard/Dashboard';
 
@@ -14,6 +15,7 @@ const Routes = (location) => (
   <Switch>
     <Route path="/" exact component={SignIn} />
     <Route path="/signup" component={SignUp} />
+    <Route path="/forgot" component={ForgotPassword} />
     <Route path="/dashboard">
       {isPrivate === user ? (
         <Redirect to={{ pathname: '/', state: { from: location } }} />
