@@ -3,7 +3,7 @@ import '../ResetPassword/ResetPassword.css';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FiLock } from 'react-icons/fi';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useToast } from '../../hooks/toast';
@@ -12,6 +12,7 @@ import logoImg from '../../assets/logo.svg';
 
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
+import api from '../../services/api';
 
 const formFields = [
   {
@@ -34,6 +35,8 @@ const ResetPassword = () => {
   const { addToast } = useToast();
   const history = useHistory();
 
+  const location = useLocation();
+
   const handleSubmit = useCallback(
     async (data) => {
       try {
@@ -51,13 +54,26 @@ const ResetPassword = () => {
           abortEarly: false,
         });
 
+        const { password, password_confirmation } = data; // eslint-disable-line
+        const token = location.search.replace('?token=', '');
+
+        if (!token) {
+          throw new Error();
+        }
+
+        await api.post('/password/reset', {
+          password,
+          password_confirmation,
+          token,
+        });
+
         addToast({
           type: 'success',
           title: 'Login efetuado',
           description: 'Seu login foi feito com sucesso!',
         });
 
-        history.push('/signin');
+        history.push('/');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -71,7 +87,7 @@ const ResetPassword = () => {
         });
       }
     },
-    [addToast, history]
+    [addToast, history, location.search]
   );
 
   return (
