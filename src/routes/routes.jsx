@@ -1,6 +1,6 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { useAuth } from '../hooks/auth';
+import { Switch } from 'react-router-dom';
+import Route from './Route';
 
 import SignIn from '../pages/SignIn/SignIn';
 import SignUp from '../pages/SignUp/SignUp';
@@ -9,22 +9,14 @@ import ResetPassword from '../pages/ResetPassword/ResetPassword';
 
 import Dashboard from '../pages/Dashboard/Dashboard';
 
-const { user } = useAuth;
-const isPrivate = false;
-
-const Routes = (location) => (
+const Routes = () => (
   <Switch>
     <Route path="/" exact component={SignIn} />
     <Route path="/signup" component={SignUp} />
     <Route path="/forgot-password" component={ForgotPassword} />
     <Route path="/reset-password" component={ResetPassword} />
-    <Route path="/dashboard">
-      {isPrivate === user ? (
-        <Redirect to={{ pathname: '/', state: { from: location } }} />
-      ) : (
-        <Dashboard />
-      )}
-    </Route>
+
+    <Route path="/dashboard" component={Dashboard} isPrivate />
   </Switch>
 );
 
