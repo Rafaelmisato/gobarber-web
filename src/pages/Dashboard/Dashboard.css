@@ -56,3 +56,204 @@
 .profile-content-dashboard > strong{
   color: #ff9000;
 }
+
+.content-dashboard{
+  max-width: 1120px;
+  margin: 64px auto;
+  display: flex;
+}
+
+.schedule-dashboard{
+  flex: 1;
+  margin-right: 120px;
+}
+
+.schedule-dashboard > h1{
+  font-size: 36px
+}
+
+.schedule-dashboard > p{
+  margin-top: 8px;
+  color: #ff9000;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.schedule-dashboard > p > span{
+  display: flex;
+  align-items: center;
+}
+
+.schedule-dashboard > p > span + span::before{
+  content: '';
+  width: 1px;
+  height: 12px;
+  background: #ff9000;
+  margin: 0 8px;
+}
+
+.next-appointment-dashboard{
+  margin-top: 64px;
+}
+
+.next-appointment-dashboard > strong{
+  color: #999591;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.next-appointment-dashboard > div{
+  background: #3e3b47;
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  border-radius: 10px;
+  margin-top: 24px;
+  position: relative;
+}
+
+.next-appointment-dashboard > div::before{
+  content: '';
+  position: absolute;
+  height: 80%;
+  width: 1px;
+  left: 0;
+  top: 10%;
+  background: #ff9000;
+}
+
+.next-appointment-dashboard > div > img{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.next-appointment-dashboard > div > strong{
+  margin-left: 24px;
+  color: #fff;
+}
+
+.next-appointment-dashboard > div > span{
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  color: #999591;
+}
+
+.next-appointment-dashboard > div > span > svg{
+  color: #ff9000;
+  margin-right: 8px;
+}
+
+.schedule-dashboard > section{
+  margin-top: 48px;
+}
+
+.schedule-dashboard > section > strong{
+  color: #999591;
+  font-size: 20px;
+  line-height: 26px;
+  border-bottom: 1px solid #3e3b47;
+  display: block;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.appointment-section{
+  display: flex;
+  align-items: center;
+}
+
+.appointment-section + div{
+  margin-top: 16px;
+}
+
+.appointment-section > span{
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  color: #f4ede8;
+}
+
+.appointment-section > span > svg{
+  color: #ff9000;
+  margin-right: 8px;
+}
+
+.appointment-section > div{
+  flex: 1;
+  background: #3e3b47;
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  border-radius: 10px;
+  margin-left: 24px;
+}
+
+.appointment-section > div > img{
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.appointment-section > div > strong{
+  margin-left: 24px;
+  color: #fff;
+  font-size: 20px;
+}
+
+.calendar-dashboard{
+  width: 380px;
+}
+
+.DayPicker {
+  background: #28262e;
+  border-radius: 10px;
+}
+
+.DayPicker-wrapper {
+  padding-bottom: 0;
+}
+
+.DayPicker,
+.DayPicker-Month {
+  width: 100%;
+}
+
+.DayPicker-Month {
+  margin: 30px 0 16px 0 !important;
+  border-spacing: 8px !important;
+  border-collapse: separate !important;
+}
+
+.DayPicker-Day {
+  width: 40px;
+  height: 40px;
+}
+
+.DayPicker-Day--available:not(.DayPicker-Day--outside) {
+  background: #3e3b47;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.DayPicker:not(.DayPicker--interactionDisabled)
+  .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+  background: #3e3b4771 !important;
+}
+
+.DayPicker-Day--today {
+  font-weight: normal;
+}
+
+.DayPicker-Day--disabled {
+  color: #666360 !important;
+  background: transparent !important;
+}
+
+.DayPicker-Day--selected {
+  background: #ff9000 !important;
+  border-radius: 10px;
+  color: #232129 !important;
+}
