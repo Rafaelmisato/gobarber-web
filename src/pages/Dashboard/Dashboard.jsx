@@ -1,5 +1,7 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import './Dashboard.css';
+import { isToday, format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
@@ -13,6 +15,7 @@ const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [monthAvailability, setMonthAvailability] = useState([]);
+  const [appointments, setAppointments] = useState([]);
   const { signOut, user } = useAuth();
 
   const handleDateChange = useCallback((day, modifiers) => {
@@ -34,6 +37,20 @@ const Dashboard = () => {
       });
   }, [currentMonth, user.id]);
 
+  useEffect(() => {
+    api
+      .get('/appointments/me', {
+        params: {
+          year: selectedDate.getFullYear(),
+          month: selectedDate.getMonth() + 1,
+          day: selectedDate.getDate(),
+        },
+      })
+      .then((response) => {
+        setAppointments(response.data);
+      });
+  }, [selectedDate]);
+
   const disabledDays = useMemo(() => {
     const dates = monthAvailability
       .filter((monthDay) => monthDay.available === false)
@@ -49,6 +66,16 @@ const Dashboard = () => {
   const handleMonthChange = useCallback((month) => {
     setCurrentMonth(month);
   }, []);
+
+  const selectedDateAsText = useMemo(() => {
+    return format(selectedDate, "'Dia' dd 'de' MMMM", {
+      locale: ptBR,
+    });
+  }, [selectedDate]);
+
+  const selectedWeekDay = useMemo(() => {
+    return format(selectedDate, "cccc'-feira'", { locale: ptBR });
+  }, [selectedDate]);
 
   return (
     <div className="dashboard-container">
@@ -72,9 +99,9 @@ const Dashboard = () => {
         <div className="schedule-dashboard">
           <h1>Horários agendados</h1>
           <p>
-            <span>Hoje</span>
-            <span>Dia 6</span>
-            <span>Segunda-Feira</span>
+            {isToday(selectedDate) && <span>Hoje</span>}
+            <span>{selectedDateAsText}</span>
+            <span>{selectedWeekDay}</span>
           </p>
           <div className="next-appointment-dashboard">
             <strong>Atendimento a seguir</strong>
