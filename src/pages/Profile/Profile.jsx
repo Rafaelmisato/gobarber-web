@@ -32,13 +32,13 @@ const formFields = [
     icon: FiLock,
   },
   {
-    id: 'new_password',
+    id: 'password',
     type: 'password',
     placeholder: 'Nova senha',
     icon: FiLock,
   },
   {
-    id: 'confirm_password',
+    id: 'password_confirmation',
     type: 'password',
     placeholder: 'Confirmar senha',
     icon: FiLock,
@@ -62,21 +62,55 @@ const Profile = () => {
           email: Yup.string()
             .required('Email obrigatório')
             .email('Digite um e-mail válido'),
-          password: Yup.string().min(6, 'No minimo 6 digitos'),
+          old_password: Yup.string(),
+          password: Yup.string().when('old_password', {
+            is: (val) => !!val.length,
+            then: Yup.string().required('Campo Obrigatório'),
+            otherwise: Yup.string(),
+          }),
+          password_confirmation: Yup.string()
+            .when('old_password', {
+              is: (val) => !!val.length,
+              then: Yup.string().required('Campo Obrigatório'),
+              otherwise: Yup.string(),
+            })
+            .oneOf([Yup.ref('password'), null], 'Confirmação Incorreta'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        await api.post('/users', data);
+        const {
+          name,
+          email,
+          old_password, // eslint-disable-line
+          password,
+          password_confirmation, // eslint-disable-line
+        } = data;
 
-        history.push('/');
+        const formData = {
+          name,
+          email,
+          ...(old_password // eslint-disable-line
+            ? {
+                old_password,
+                password,
+                password_confirmation,
+              }
+            : {}),
+        };
+
+        const response = await api.put('/profile', formData);
+
+        updateUser(response.data);
+
+        history.push('/dashboard');
 
         addToast({
           type: 'sucess',
-          title: 'Cadastro realizado!',
-          description: 'Você já pode fazer seu login no GoBarber!',
+          title: 'Perfil atualizado!',
+          description: 'Atualize a página para ver as alterações',
         });
       } catch (err) {
         console.log(err);
@@ -90,12 +124,12 @@ const Profile = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro no cadastro',
-          description: 'Ocorreu um erro ao fazer cadastro, tente novamente',
+          title: 'Erro na atualização',
+          description: 'Ocorreu um erro ao atualizar perfil, tente novamente',
         });
       }
     },
-    [addToast, history]
+    [addToast, history, updateUser]
   );
 
   const handleAvatarChange = useCallback(
