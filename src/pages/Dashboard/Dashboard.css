@@ -49,8 +49,13 @@
   color: #f4ede8;
 }
 
-.profile-content-dashboard > strong{
+.profile-content-dashboard > a{
   color: #ff9000;
+  text-decoration: none;
+}
+
+.profile-content-dashboard > a:hover{
+  opacity: 0.8;
 }
 
 .content-dashboard{

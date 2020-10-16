@@ -7,6 +7,7 @@ import 'react-day-picker/lib/style.css';
 
 import { FiPower, FiClock } from 'react-icons/fi';
 import { parseISO } from 'date-fns/esm';
+import { Link } from 'react-router-dom';
 import logoImg from '../../assets/logo.svg';
 import { useAuth } from '../../hooks/auth';
 
@@ -111,8 +112,10 @@ const Dashboard = () => {
           <div className="profile-img-dashboard">
             <img src={user.avatar_url} alt={user.name} />
             <div className="profile-content-dashboard">
-              <span>Bom dia,</span>
-              <strong>{user.name}</strong>
+              <span>Bem vindo,</span>
+              <Link to="/profile">
+                <strong>{user.name}</strong>
+              </Link>
             </div>
           </div>
           <button type="button" onClick={signOut}>

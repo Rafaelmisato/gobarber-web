@@ -1,0 +1,79 @@
+.profile-container{
+  height: 100vh;
+}
+
+.profile-container > header{
+  height: 144px;
+  background: #28262e;
+  display: flex;
+  align-items: center;
+}
+
+.profile-container > header > div{
+  width: 1120px;
+  margin: 0 auto;
+}
+
+.profile-container > header svg{
+  color: #999591;
+  width: 24px;
+  height: 24px;
+}
+
+.profile-content{
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  animation: toRight 1s ease-in-out;
+  margin: -170px auto 0 auto;
+}
+
+.profile-content form{
+  margin: 80px auto;
+  width: 340px;
+  text-align: center;
+}
+
+.profile-content h1{ 
+  font-size: 20px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.avatar-input{
+  position: relative;
+  width: 186px;
+  margin: 0 auto 32px auto;
+}
+
+.avatar-input img{
+  width: 186px;
+  height: 186px;
+  border-radius: 50%;
+}
+
+.avatar-input button{
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ff9000;
+  border: none;
+  position: absolute;
+  top: 75%;
+  left: 75%;
+  transition: background 0.2s;
+}
+
+.avatar-input button:hover{
+  background: #d37800;
+}
+
+.avatar-input svg{
+  display: flex;
+  align-self: center;
+  margin: 0 auto;
+  color: #312e38;
+}

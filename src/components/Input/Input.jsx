@@ -3,7 +3,7 @@ import { useField } from '@unform/core';
 import Tooltip from '../Tooltip/Tooltip';
 import './Input.css';
 
-const Input = ({ icon, name, ...props }) => {
+const Input = ({ icon, name, containerStyle, ...props }) => {
   const Icon = icon;
   const inputRef = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
