@@ -50,7 +50,7 @@ const Profile = () => {
   const { addToast } = useToast();
   const history = useHistory();
 
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
 
   const handleSubmit = useCallback(
     async (data) => {
@@ -98,6 +98,27 @@ const Profile = () => {
     [addToast, history]
   );
 
+  const handleAvatarChange = useCallback(
+    (event) => {
+      if (event.target.files) {
+        const data = new FormData();
+
+        data.append('avatar', event.target.files[0]);
+
+        api.patch('/users/avatar', data).then((response) => {
+          updateUser(response.data);
+
+          addToast({
+            type: 'sucess',
+            title: 'Avatar atualizado',
+            description: 'Atualize a página, para ver as alterações',
+          });
+        });
+      }
+    },
+    [addToast, updateUser]
+  );
+
   return (
     <div className="profile-container">
       <header>
@@ -118,9 +139,11 @@ const Profile = () => {
         >
           <div className="avatar-input">
             <img src={user.avatar_url} alt={user.name} />
-            <button type="button">
-              <FiCamera size="20px" />
-            </button>
+
+            <label htmlFor="avatar">
+              <FiCamera />
+              <input type="file" id="avatar" onChange={handleAvatarChange} />
+            </label>
           </div>
           <h1>Meu perfil</h1>
 

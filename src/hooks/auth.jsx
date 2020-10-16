@@ -40,8 +40,25 @@ export const AuthProvider = ({ children }) => {
     setData({});
   }, []);
 
+  const updateUser = useCallback(
+    (user) => {
+      localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+
+      setData({
+        token: data.token,
+        user: {
+          ...data.user,
+          user,
+        },
+      });
+    },
+    [setData, data.user, data.token]
+  );
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user: data.user, signIn, signOut, updateUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

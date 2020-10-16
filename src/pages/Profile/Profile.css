@@ -55,7 +55,7 @@
   border-radius: 50%;
 }
 
-.avatar-input button{
+.avatar-input label{
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -65,15 +65,23 @@
   top: 75%;
   left: 75%;
   transition: background 0.2s;
+  cursor: pointer;
 }
 
-.avatar-input button:hover{
+.avatar-input label:hover{
   background: #d37800;
 }
 
 .avatar-input svg{
-  display: flex;
-  align-self: center;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
   margin: 0 auto;
   color: #312e38;
+  width: 20px;
+  height: 20px;
+}
+
+.avatar-input label > input{
+  display: none;
 }
