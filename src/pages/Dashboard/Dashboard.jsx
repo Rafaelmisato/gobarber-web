@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import './Dashboard.css';
-import { isToday, format } from 'date-fns';
+import { isToday, format, isAfter } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
 import { FiPower, FiClock } from 'react-icons/fi';
+import { parseISO } from 'date-fns/esm';
 import logoImg from '../../assets/logo.svg';
 import { useAuth } from '../../hooks/auth';
 
@@ -19,7 +20,7 @@ const Dashboard = () => {
   const { signOut, user } = useAuth();
 
   const handleDateChange = useCallback((day, modifiers) => {
-    if (modifiers.available) {
+    if (modifiers.available && !modifiers.disabled) {
       setSelectedDate(day);
     }
   }, []);
@@ -47,7 +48,14 @@ const Dashboard = () => {
         },
       })
       .then((response) => {
-        setAppointments(response.data);
+        const appointmentsFormatted = response.data.map((appointment) => {
+          return {
+            ...appointment,
+            hourFormatted: format(parseISO(appointment.date), 'HH:mm'),
+          };
+        });
+
+        setAppointments(appointmentsFormatted);
       });
   }, [selectedDate]);
 
@@ -77,6 +85,24 @@ const Dashboard = () => {
     return format(selectedDate, "cccc'-feira'", { locale: ptBR });
   }, [selectedDate]);
 
+  const morningAppointments = useMemo(() => {
+    return appointments.filter((appointment) => {
+      return parseISO(appointment.date).getHours() < 12;
+    });
+  }, [appointments]);
+
+  const afternoonAppointments = useMemo(() => {
+    return appointments.filter((appointment) => {
+      return parseISO(appointment.date).getHours() >= 12;
+    });
+  }, [appointments]);
+
+  const nextAppointment = useMemo(() => {
+    return appointments.find((appointment) => {
+      return isAfter(parseISO(appointment.date), new Date());
+    });
+  }, [appointments]);
+
   return (
     <div className="dashboard-container">
       <div className="header-dashboard">
@@ -103,55 +129,74 @@ const Dashboard = () => {
             <span>{selectedDateAsText}</span>
             <span>{selectedWeekDay}</span>
           </p>
-          <div className="next-appointment-dashboard">
-            <strong>Atendimento a seguir</strong>
-            <div>
-              <img src={user.avatar_url} alt="Rafael Misato" />
 
-              <strong>Rafael Misato</strong>
-              <span>
-                <FiClock />
-                08:00
-              </span>
+          {isToday(selectedDate) && nextAppointment && (
+            <div className="next-appointment-dashboard">
+              <strong>Agendamento a seguir</strong>
+              <div>
+                <img
+                  src={nextAppointment.user.avatar_url}
+                  alt={nextAppointment.user.name}
+                />
+
+                <strong>{nextAppointment.user.name}</strong>
+                <span>
+                  <FiClock />
+                  {nextAppointment.hourFormatted}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
 
           <section>
             <strong>Manhã</strong>
-            <div className="appointment-section">
-              <span>
-                <FiClock />
-                08:00
-              </span>
-              <div>
-                <img src={user.avatar_url} alt={user.name} />
-                <strong>{user.name}</strong>
-              </div>
-            </div>
-            <div className="appointment-section">
-              <span>
-                <FiClock />
-                08:00
-              </span>
-              <div>
-                <img src={user.avatar_url} alt={user.name} />
-                <strong>{user.name}</strong>
-              </div>
-            </div>
+
+            {morningAppointments.length === 0 && (
+              <p>Nenhum agendamento neste período</p>
+            )}
+
+            {morningAppointments.map((appointment) => {
+              return (
+                <div className="appointment-section" key={appointment.id}>
+                  <span>
+                    <FiClock />
+                    {appointment.hourFormatted}
+                  </span>
+                  <div>
+                    <img
+                      src={appointment.user.avatar_url}
+                      alt={appointment.user.name}
+                    />
+                    <strong>{appointment.user.name}</strong>
+                  </div>
+                </div>
+              );
+            })}
           </section>
 
           <section>
             <strong>Tarde</strong>
-            <div className="appointment-section">
-              <span>
-                <FiClock />
-                14:00
-              </span>
-              <div>
-                <img src={user.avatar_url} alt={user.name} />
-                <strong>{user.name}</strong>
-              </div>
-            </div>
+            {afternoonAppointments.length === 0 && (
+              <p>Nenhum agendamento neste período</p>
+            )}
+
+            {afternoonAppointments.map((appointment) => {
+              return (
+                <div className="appointment-section" key={appointment.id}>
+                  <span>
+                    <FiClock />
+                    {appointment.hourFormatted}
+                  </span>
+                  <div>
+                    <img
+                      src={appointment.user.avatar_url}
+                      alt={appointment.user.name}
+                    />
+                    <strong>{appointment.user.name}</strong>
+                  </div>
+                </div>
+              );
+            })}
           </section>
         </div>
         <aside className="calendar-dashboard">
