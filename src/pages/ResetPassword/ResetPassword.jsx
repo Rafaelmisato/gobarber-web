@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import '../ResetPassword/ResetPassword.css';
+import './ResetPassword.css';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FiLock } from 'react-icons/fi';

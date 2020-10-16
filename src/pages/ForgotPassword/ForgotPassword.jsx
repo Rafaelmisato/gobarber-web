@@ -97,7 +97,7 @@ const ForgotPassword = () => {
           <Button loading={loading}>Recuperar</Button>
         </Form>
 
-        <Link to="/signin">
+        <Link to="/">
           <FiLogIn />
           Voltar ao Login
         </Link>
